@@ -6,7 +6,7 @@ from .models import Todo, Project
 class ProjectSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Project
-		fields = "__'all'__"
+		fields ="__all__"
 		
 # serializer class Todo model		
 class TodoSerializer(serializers.ModelSerializer):
