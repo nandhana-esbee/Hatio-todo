@@ -1,7 +1,7 @@
-from rest_framework import generics,status,views,permissions
+from rest_framework import generics,status,views
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from .serializers import RegisterSerializer,LoginSerializer,LogoutSerializer
 
 # Create your views here.
@@ -26,7 +26,7 @@ class LoginAPIView(generics.GenericAPIView):
 
 class LogoutAPIView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
