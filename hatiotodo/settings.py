@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import datetime
 from pathlib import Path
 from dotenv import load_dotenv
 import environ
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'functions',
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -140,4 +141,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = (
 	'http://localhost:3000',
 )
+
+AUTH_USER_MODEL = "user.User"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=1),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
 
