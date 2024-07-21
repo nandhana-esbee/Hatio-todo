@@ -32,11 +32,16 @@ class TodoView(viewsets.ModelViewSet):
     #update a todo
     def update(self, request, *args, **kwargs):
         todo_id = kwargs.get('pk')
-        todo = Todo.objects.filter(todo_id=todo_id)
+        todo = Todo.objects.filter(todo_id=todo_id).first()
         if not todo:
             return Response({'error': 'Todo not found'}, status=status.HTTP_404_NOT_FOUND)
-        todo_values = request.data
-        serializer = TodoSerializer(todo, data=todo_values)
+        todo_update = request.data
+
+        #if description is not in the request data, use the existing description
+        if "Description" not in todo_update:
+            todo_update["Description"] = todo.Description
+
+        serializer = TodoSerializer(todo, data=todo_update)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             todo_data = serializer.data
@@ -88,6 +93,12 @@ class ProjectView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         project_id = kwargs.get('pk')
         project = Project.objects.filter(Project_id=project_id).first()
+
+        #if project created user is not the same as the user trying to update the project (optional)
+        user = request.user.id
+        project_user = project.project_user.id
+        if user != project_user:
+            return Response({'error': 'You are not allowed to update this project .Login first!!!'}, status=status.HTTP_403_FORBIDDEN)
 
         if not project:
             return Response({'error': 'Project not found'}, status=status.HTTP_404_NOT_FOUND)
