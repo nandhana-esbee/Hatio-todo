@@ -23,7 +23,7 @@ class Project(models.Model):
     Project_id = models.AutoField(primary_key=True)
     date = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=50)
-    ListofTodo = models.ManyToManyField(Todo)
+    ListofTodo = models.ManyToManyField(Todo,blank=True)
     Updated_at= models.DateTimeField(auto_now=True)
     
     def __str__(self):
