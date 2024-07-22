@@ -1,5 +1,5 @@
 import React ,{useState ,useEffect} from 'react';
-import api from '../api/axios';
+import api from '../api';
 import {BrowserRouter as Browser, Routes, Route} from 'react-router-dom';
 
 
