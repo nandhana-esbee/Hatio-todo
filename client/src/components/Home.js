@@ -1,5 +1,5 @@
 import React ,{useState,useEffect} from "react";
-import api from '../api/todo';
+import api from '../api/axios';
 // import components
 import Header from './Header';
 import Projectcreate from './Projectcreate';
@@ -29,16 +29,17 @@ const Home = () => {
     };
     getAllProjects();
   }, []);
+
     return (
-        <div>
-      <h2 className="ui center aligned icon header" style={{marginTop:"7px"}} >
-      <i className="circular book icon" ></i>
-      Hatio ToDo App
-      </h2>
-      <Header />
-      <Projectcreate addprojecthandler={addprojecthandler} />
-      <ProjectList project={projectlist}/>
-    </div>
+      <div>
+        <h2 className="ui center aligned icon header" style={{marginTop:"2rem"}} >
+          <i className="circular book icon" ></i>
+          Hatio ToDo App
+        </h2>
+        <Header />
+        <Projectcreate addprojecthandler={addprojecthandler} />
+        <ProjectList project={projectlist}/>
+      </div>
     );
     }
 

@@ -8,9 +8,10 @@ const Projectcard = (props) => {
                 <div className="header">{props.projects.title}</div>
             </div>
             <div className="extra content">
-                <div className="ui two buttons">
-                    <div className="ui basic green button">Edit</div>
-                    <div className="ui basic red button">Delete</div>
+                <div className="ui three buttons">
+                    <a className="ui basic green button" href="/todo"><i class="list ul icon"></i></a>
+                    <a className="ui basic blue button"><i class="download icon"></i></a>
+                    <a className="ui basic red button"><i class="trash icon"></i></a>
                 </div>
             </div>
         </div>
