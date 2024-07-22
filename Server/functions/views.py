@@ -13,7 +13,7 @@ from users.models import Users
 class TodoView(viewsets.ModelViewSet):
     serializer_class = TodoSerializer
     queryset = Todo.objects.all()
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     #create a new todo
     def create(self, request, *args, **kwargs):
@@ -68,7 +68,7 @@ class TodoView(viewsets.ModelViewSet):
 class ProjectView(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     
     #create a new project
     def create(self, request, *args, **kwargs):

@@ -21,9 +21,10 @@ class LoginAPIView(generics.GenericAPIView):
     serializer_class = LoginSerializer
     def post(self,request):
         serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
-
+        if serializer.is_valid():
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
 class LogoutAPIView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
     permission_classes = (IsAuthenticated,)
