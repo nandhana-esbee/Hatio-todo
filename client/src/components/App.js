@@ -1,7 +1,7 @@
 import React ,{useState ,useEffect} from 'react';
 import api from '../api';
 import {BrowserRouter as Browser, Routes, Route ,Navigate} from 'react-router-dom';
-
+import { REFRESH_TOKEN ,ACCESS_TOKEN } from '../constants';
 
 
 //import components
@@ -13,8 +13,24 @@ import ProtectedRoute from './ProtectedRoute';
 
 //Logout function to clear the local storage
 function Logout(){
-  localStorage.clear();
-  return <Navigate to="/login" />
+  try{
+    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
+    if(refreshToken && accessToken){
+      const res = api.post('/userconf/logout/',{"refresh":refreshToken},{
+        headers:{
+          Authorization: `Bearer ${accessToken}`  
+        }
+      })
+    }
+  }
+  catch(err){
+    console.log(err);
+  }
+  finally{
+    localStorage.clear();
+    return <Navigate to="/login" />
+  }
 
 }
 
