@@ -17,11 +17,13 @@ const Home = () => {
     const response = await api.post("/Project-list/", project);
     setProjects([...projectlist,response.data]);
   };
+
   //Retreive projects from the database
   const RetreiveProjects = async () => {
-    const response = await api.get("/Project-list/");
+    const response = await api.get("/api/Project-list/");
     return response.data;
   }
+  
   useEffect(() => {
     const getAllProjects = async () => {
       const allProjects = await RetreiveProjects();

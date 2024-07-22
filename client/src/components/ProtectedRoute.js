@@ -1,7 +1,9 @@
-import React ,{useState,useEffect} from 'react';
+import {useState,useEffect} from 'react';
 import api from '../api';
 import { Navigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
+import { ACCESS_TOKEN,REFRESH_TOKEN } from '../constants';
+
 
 function ProtectedRoute({children}){
     const[isAuthorized,setIsAuthorized] = useState(null);
@@ -13,15 +15,16 @@ function ProtectedRoute({children}){
 
     //refresh the access token
     const refreshToken = async () => {
-        const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+        const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+        console.log(refreshToken);
         if(!refreshToken){
             setIsAuthorized(false);
             return;
         }
         try{
-            const response = await api.post('/token/refresh/', {refresh:refreshToken});
+            const response = await api.post('/userconf/api/token/refresh/', {refresh:refreshToken});
             if(response.status === 200){
-                localStorage.setItem('ACCESS_TOKEN',response.data.access);
+                localStorage.setItem('ACCESS_TOKEN',response.data.tokens['access']);
                 setIsAuthorized(true);
             }
             else{
@@ -36,11 +39,12 @@ function ProtectedRoute({children}){
 
     //check if the access token expires or not
     const auth = async () => {
-        const token = localStorage.getItem('ACCESS_TOKEN');
+        const token = localStorage.getItem(ACCESS_TOKEN);
         if(!token){
             setIsAuthorized(false);
             return;
         }
+
         const decoded = jwtDecode(token);
         const Exp = decoded.exp;
         const now = Date.now() / 1000;
@@ -55,7 +59,7 @@ function ProtectedRoute({children}){
     }
     
     //if the user is not authorized then redirect to login page
-    return isAuthorized ? children : <Navigate to="/" />
+    return isAuthorized ? children : <Navigate to="/login" />
 
 }
 

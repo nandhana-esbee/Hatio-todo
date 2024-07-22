@@ -1,5 +1,7 @@
 import React ,{useState} from "react";
 import { useNavigate } from "react-router-dom";
+import api from '../api';
+
 
 import './App.css';
 const Register = () => {
@@ -19,24 +21,32 @@ const Register = () => {
             alert("Passwords do not match");
             return;
         }
-        //console.log("Submitted");
+    
+        // fetch("http://127.0.0.1:8000/userconf/register/",{
+        //     method:"POST",
+        //     headers:{"Content-Type":"application/json"},
+        //     body:JSON.stringify({username,email,password})
+        // }).then((res)=>{
+        //     console.log(res);
+        //     alert("User registered successfully");
+        //     navigate("/login");
+        // }).catch((err)=>{
+        //     console.log(err);
+        // });
 
-        fetch("http://127.0.0.1:8000/userconf/register/",{
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({username,email,password})
-        }).then((res)=>{
-            console.log(res);
-            alert("User registered successfully");
-            navigate("/");
-        }).catch((err)=>{
-            console.log(err);
-        });
-
+        try{
+            const res = api.post("userconf/register/",{username,email,password});
+            navigate("/login");
+        }
+        catch(err){
+            alert(err);
+        }
+        finally{
         setUsername("");
         setEmail("");
         setPassword("");
         setPassword2("");
+        }
 
     }
 
@@ -48,16 +58,18 @@ const Register = () => {
       Hatio ToDo App
       </h2>
     </div>
+    <form onSubmit={handlesubmit}>
     <div className="field" style={{display:'grid',margin:"1.5rem",marginBottom:"2rem"}}>
-        <input type="username" placeholder="Username" value={username} onChange={e =>setUsername(e.target.value)}/>
-        <input type="email" placeholder="Email" value={email} onChange={e =>setEmail(e.target.value)}/>
+        <input type="username" placeholder="Username" autoComplete="name" value={username} onChange={e =>setUsername(e.target.value)}/>
+        <input type="email" placeholder="Email" autoComplete="email" value={email} onChange={e =>setEmail(e.target.value)}/>
         <input type="password" placeholder="Password" value={password} onChange={e =>setPassword(e.target.value)} />
         <input type="password" placeholder="Confirm Password" value={password2} onChange={e =>setPassword2(e.target.value)} />
     </div>
     <div  style={{marginBottom:"1rem",marginLeft:"21.1rem"}}>
-    <button className="ui primary submit button" onClick={handlesubmit}>Submit</button>
-    <p>Already have account ? <a href='/'>Login</a></p>
+    <button className="ui primary submit button" >Submit</button>
+    <p>Already have account ? <a href='/login'>Login</a></p>
     </div>
+    </form>
     </div>
     );
     }

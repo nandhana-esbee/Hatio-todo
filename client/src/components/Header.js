@@ -9,7 +9,7 @@ const Header = () => {
             {/* <a className="item">Messages</a>
             <a className="item">Friends</a> */}
             <div className="right menu">
-                <a className="ui item" href='/' style={{color:"red"}}>Logout</a>
+                <a className="ui item" href='/logout' style={{color:"red"}}>Logout</a>
             </div>
         </div>
     );
