@@ -60,7 +60,11 @@ class TodoView(viewsets.ModelViewSet):
     
     #get all todos
     def list(self, request, *args, **kwargs):
-        todos = Todo.objects.all().order_by('-Status')
+        #need to pass project_id through params
+        project_id = request.query_params.get('Project_id')
+        user_id = request.user.id
+        todo_ids = Project.objects.filter(project_user=user_id , Project_id=project_id).values_list('ListofTodo', flat=True)
+        todos = Todo.objects.filter(todo_id__in=todo_ids).order_by('-Status')
         serializer = TodoSerializer(todos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
       
@@ -124,7 +128,8 @@ class ProjectView(viewsets.ModelViewSet):
     
     #get all projects
     def list(self, request, *args, **kwargs):
-        projects = Project.objects.all().order_by('-Updated_at')
+        user_id = request.user.id
+        projects = Project.objects.filter(project_user=user_id).order_by('-Updated_at')
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
