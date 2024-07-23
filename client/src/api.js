@@ -11,11 +11,14 @@ api.interceptors.request.use(
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
             config.headers['Content-Type'] = 'application/json';
-            console.log(config);
         }
         return config;
     },
     error => {
+        if (!error.response) {
+            // We have a network error
+            console.error('Network error:', error);
+        }
         return Promise.reject(error);
     }
 );

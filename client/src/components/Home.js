@@ -9,12 +9,13 @@ import ProjectList from './ProjectList';
 
 
 const Home = () => {
-    const [projectlist, setProjects] = useState([]);
+
+  const [projectlist, setProjects] = useState([]);
 
   //Add project to the database
   const addprojecthandler = async (project) => {
     console.log(project);
-    const response = await api.post("/Project-list/", project);
+    const response = await api.post("/api/Project-list/", project);
     setProjects([...projectlist,response.data]);
   };
 
@@ -23,7 +24,7 @@ const Home = () => {
     const response = await api.get("/api/Project-list/");
     return response.data;
   }
-  
+
   useEffect(() => {
     const getAllProjects = async () => {
       const allProjects = await RetreiveProjects();

@@ -1,4 +1,4 @@
-import React ,{useState ,useEffect} from 'react';
+import React from 'react';
 import api from '../api';
 import {BrowserRouter as Browser, Routes, Route ,Navigate} from 'react-router-dom';
 import { REFRESH_TOKEN ,ACCESS_TOKEN } from '../constants';
@@ -22,6 +22,7 @@ function Logout(){
           Authorization: `Bearer ${accessToken}`  
         }
       })
+      return res.data;
     }
   }
   catch(err){
@@ -40,14 +41,29 @@ function RegisterAndLogout(){
   return <Register />
 }
 
-function App() {
 
+//delete the project card
+// function DeleteProject(id) {
+//    try{
+//     const res = api.delete('/api/Project-list/'+id+'/');
+//    }
+//    catch(err){
+//      console.log(err);
+//    }
+//    finally{
+//      return <Navigate to="/" />
+//    } 
+// }
+
+function App() {
+  
   return (
     <div className="App">
       <Browser>
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
-        <Route path="/todo"  element={<ProtectedRoute><TodoList/></ProtectedRoute>}></Route>
+        {/* <Route path="/deleteproj" element={<ProtectedRoute><DeleteProject/></ProtectedRoute>}></Route> */}
+        <Route path="/todo"  element={<ProtectedRoute><TodoList /></ProtectedRoute>}></Route>
         <Route path="/login"  element={<Login/>}></Route>
         <Route path="/logout"  element={<Logout/>}></Route>
         <Route path="/register"  element={<RegisterAndLogout/>}></Route>

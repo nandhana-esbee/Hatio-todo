@@ -2,8 +2,8 @@ import React from 'react';
 import Projectcard from './Projectcard';
 
 const ProjectList = (props) => {
-    const projectlistrender = props.project.map((project) => {
-        return <Projectcard projects={project}/>
+    const projectlistrender = props.project.map(project => {
+        return <Projectcard projects={project} key={project.Project_id}/>
     })
 return <div className="ui cards" style={{marginLeft:"1rem", marginRight:"1rem"}}>{projectlistrender}</div>;
 }

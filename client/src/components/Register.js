@@ -37,6 +37,7 @@ const Register = () => {
         try{
             const res = api.post("userconf/register/",{username,email,password});
             navigate("/login");
+            return res;
         }
         catch(err){
             alert(err);
