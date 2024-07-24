@@ -39,10 +39,12 @@ const Taskedit = () => {
                         <input placeholder="Todo description" type="text" value={description} 
                         onChange={e=>setDescription(e.target.value)} />
                          </div>
-                         <div className='ui input' style={{paddingLeft:"1rem" , paddingRight:"1rem"}}>
+                         <div className='ui checkbox' style={{paddingLeft:"1rem" , paddingRight:"1rem"}}>
+                        <div className='ui input'>
                         <input type="checkbox" name="example" value={statuses} checked={statuses===true}
                         onChange={e=>isCompleted(e.target.value)} style={{width:"1.6rem"}} />
                         <label>Completed?</label>
+                        </div>
                         </div>
                         <div className="ui icon buttons">
                         <button className="ui primary button" style={{marginLeft:"10px"}}><i className="plus icon"/></button>

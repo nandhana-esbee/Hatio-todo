@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../api';
 
 const Projectcard = (props) => {
 
@@ -7,6 +8,18 @@ const Projectcard = (props) => {
     const pro = props.projects;
     const goToTodos = () => {
         navigate("/todo",{state:{pro}});
+    }
+
+    const deletecard = async () => {
+        try{
+            const response = await api.delete(`/api/Project-list/${pro.Project_id}/`);
+            if(response.status === 204){
+                console.log("Deleted successfully");
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     return (
@@ -18,7 +31,7 @@ const Projectcard = (props) => {
                 <div className="ui three buttons">
                     <button className="ui basic green button" onClick={goToTodos}><i className="list ul icon"></i></button>
                     <button className="ui basic blue button"><i className="download icon"></i></button>
-                    <button className="ui basic red button"><i className="trash icon"></i></button>
+                    <button className="ui basic red button" onClick={deletecard}><i className="trash icon"></i></button>
                 </div>
             </div>
         </div>
