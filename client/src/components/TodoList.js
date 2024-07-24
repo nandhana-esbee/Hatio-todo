@@ -2,6 +2,7 @@ import Todotable from "./Todotable";
 import { useLocation } from "react-router-dom";
 import { useEffect ,useState} from "react";
 import api from "../api";
+import Taskcreate from './Taskcreate';
 
 
 const TodoList = () => {
@@ -32,21 +33,24 @@ const TodoList = () => {
           };
          getAllTodos();
     },[]);
-    
+
     const count = Todolist.length;
     const truecount = Todolist.filter((todo) => todo.Status === true).length;  
+
     const todolistrender = Todolist.map((todo) => {
         return <Todotable todoos={todo} key={todo.todo_id}/>
     })
+    
 return (
     <div >
         <a className="ui icon button" href="/"><i class="left chevron icon"></i></a>
         <h2 className="ui center aligned icon header" style={{marginTop:"0.5rem"}} >
             <i className="circular list ul icon"></i>
             {location.state.pro.title}
-            <h5>Summary = {truecount}/{count}</h5>
+            <h5>Summary = {truecount}/{count}</h5><hr/>
         </h2>
-    <div className="ui table" style={{width:"80rem",marginLeft:"12rem"}}>{todolistrender}</div>
+    <Taskcreate />
+    <div className="ui unstackable table" style={{width:"50rem",marginLeft:"12rem"}}>{todolistrender}</div>
     </div>
 );
 }

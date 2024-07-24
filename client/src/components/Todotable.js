@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import api from "../api";
 
 const Todotable = (props) => {
@@ -7,9 +7,8 @@ const Todotable = (props) => {
     const formattedDate = date.toLocaleDateString('en-IN'); 
     const formattedTime = date.toLocaleTimeString('en-IN');
     const [checked, setChecked] = useState(props.todoos.Status);
-
+    const todo_id = props.todoos.todo_id;
     const ApichangeStatus = async (status) => {
-        const todo_id = props.todoos.todo_id;
         try{
             const response = await api.put(`/api/Todo-list/${todo_id}/`,{Status:status});
             if(response.status === 200){
@@ -20,7 +19,7 @@ const Todotable = (props) => {
             console.log(err);
         }
     }
-    
+
     const isCompleted = (e) => {
         if(checked === true){
             setChecked(false);  
@@ -53,7 +52,7 @@ const Todotable = (props) => {
         <table className="ui blue table">
             <tr >
             <td><input type="checkbox" value={checked} checked={checked===true} onChange={e=>isCompleted(e.target.value)}
-            style={{width:"1.5rem"}} className="left aligned checkbox"/></td>
+            style={{width:"1.5rem",margin:"0px"}} className="left aligned checkbox"/></td>
             <th>{props.todoos.Description}</th>
             <td>{formattedDate}</td>
             <td>{formattedTime}</td>
