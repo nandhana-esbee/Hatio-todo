@@ -58,6 +58,14 @@ class TodoView(viewsets.ModelViewSet):
         todo.delete()
         return Response({'message': 'Todo deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
     
+    def retrieve(self, request, *args, **kwargs):
+        todo_id = kwargs.get('pk')
+        todo = Todo.objects.filter(todo_id=todo_id).first()
+        if not todo:
+            return Response({'error': 'Todo not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = TodoSerializer(todo)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
     #get all todos
     def list(self, request, *args, **kwargs):
         #need to pass project_id through params
