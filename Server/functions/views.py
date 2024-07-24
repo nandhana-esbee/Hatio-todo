@@ -2,11 +2,12 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 #import serializers
-from .serializers import ProjectSerializer,TodoSerializer
+from .serializers import ProjectSerializer,TodoSerializer,ProjectTodoSerializer
 from rest_framework.permissions import IsAuthenticated
-
+#action decorator import
+from rest_framework.decorators import action
 # import models
-from .models import Project,Todo
+from .models import Project,Todo,ProjectTodo
 from users.models import Users
 
 
@@ -26,6 +27,21 @@ class TodoView(viewsets.ModelViewSet):
             serializer.save()
             todo_data = serializer.data
             return Response(todo_data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=True, methods=['post'])
+    def projecttodoupdate(self, request, *args, **kwargs):
+        todo_id = kwargs.get('pk')
+        project_id = request.data.get('Project_id')
+        if not project_id and not todo_id:
+            return Response({'error': 'Project_id and Todo_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = ProjectTodoSerializer(data={'project': project_id, 'todo': todo_id})
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            project_todo_data = serializer.data
+            return Response(project_todo_data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -70,8 +86,7 @@ class TodoView(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         #need to pass project_id through params
         project_id = request.query_params.get('Project_id')
-        user_id = request.user.id
-        todo_ids = Project.objects.filter(project_user=user_id , Project_id=project_id).values_list('ListofTodo', flat=True)
+        todo_ids = ProjectTodo.objects.filter(project=project_id).values_list('todo', flat=True)
         todos = Todo.objects.filter(todo_id__in=todo_ids).order_by('-Status')
         serializer = TodoSerializer(todos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -116,6 +131,11 @@ class ProjectView(viewsets.ModelViewSet):
             return Response({'error': 'Project not found'}, status=status.HTTP_404_NOT_FOUND)
         
         project_values = request.data
+
+        #if title is not in the request data, use the existing title
+        if "title" not in project_values:
+            project_values["title"] = project.title
+
         serializer = ProjectSerializer(project, data=project_values)
 
         if serializer.is_valid(raise_exception=True):

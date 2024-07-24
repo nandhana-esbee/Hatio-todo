@@ -1,13 +1,11 @@
 from django.db import models
 from users.models import Users
-# from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Todo(models.Model):
     #Todo: Unique Id, Description, Status, Created Date, Updated Date.
 
-    # todo_user = models.ForeignKey(User, on_delete=models.CASCADE)
     todo_id = models.AutoField(primary_key=True)
     Description = models.CharField(max_length=100)
     Status = models.BooleanField(default=False)
@@ -23,8 +21,15 @@ class Project(models.Model):
     Project_id = models.AutoField(primary_key=True)
     date = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=50)
-    ListofTodo = models.ManyToManyField(Todo,blank=True)
+    ListofTodo = models.ManyToManyField(Todo,blank=True, through='ProjectTodo')
     Updated_at= models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.title           
+        return self.title        
+
+class ProjectTodo(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    todo = models.ForeignKey(Todo, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.todo.Description   
