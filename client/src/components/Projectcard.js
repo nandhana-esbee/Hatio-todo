@@ -1,11 +1,10 @@
-import React , {useState} from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
 
 const Projectcard = (props) => {
 
     const navigate = useNavigate();
-    const pro = props.projects.Project_id
+    const pro = props.projects;
     const goToTodos = () => {
         navigate("/todo",{state:{pro}});
     }
