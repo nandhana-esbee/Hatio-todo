@@ -40,7 +40,7 @@ const TodoList = () => {
     const todolistrender = Todolist.map((todo) => {
         return <Todotable todoos={todo} key={todo.todo_id}/>
     })
-    
+
 return (
     <div >
         <a className="ui icon button" href="/"><i class="left chevron icon"></i></a>
@@ -49,8 +49,8 @@ return (
             {location.state.pro.title}
             <h5>Summary = {truecount}/{count}</h5><hr/>
         </h2>
-    <Taskcreate />
-    <div className="ui unstackable table" style={{width:"50rem",marginLeft:"12rem"}}>{todolistrender}</div>
+    <Taskcreate proj={proj_id}/>
+    <div className="ui unstackable table" style={{width:"50rem",marginLeft:"27rem"}}>{todolistrender}</div>
     </div>
 );
 }

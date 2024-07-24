@@ -1,5 +1,7 @@
-import React,{useEffect, useState} from "react";
+import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
+
 
 const Todotable = (props) => {
     const dateString = props.todoos.Updated_Date;
@@ -43,12 +45,14 @@ const Todotable = (props) => {
             console.log(err);
         }
     }
-
+    const navigate = useNavigate();
     const edittodo = () => {
         console.log("Edit todo");
+        navigate('/edittodo',{state:{todo:props.todoos}});
     }
 
     return (
+        <>
         <table className="ui blue table">
             <tr >
             <td><input type="checkbox" value={checked} checked={checked===true} onChange={e=>isCompleted(e.target.value)}
@@ -64,6 +68,7 @@ const Todotable = (props) => {
             </td>
             </tr>
         </table>
+        </>
     );
     };
 

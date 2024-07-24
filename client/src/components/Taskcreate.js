@@ -1,17 +1,30 @@
 import React , {useState} from 'react';
-import { Navigate } from 'react-router-dom';
 import api from '../api';
 
-const Taskcreate = () => {
+const Taskcreate = (props) => {
+    
     const [statuses,setStatuses] = useState(false);
     const [description,setDescription] = useState("");
-
+    const[projecttodo,setProjecttodo] = useState([]);
     const isCompleted = (e) => {
         if(statuses === true){
             setStatuses(false);   
         }
         else{
         setStatuses(true);
+        }
+    }
+    
+    const UpdateProjectTodo = async (todo_id) => {
+        try{
+            const response = await api.post(`/api/Todo-list/${todo_id}/projecttodoupdate/`,{"Project_id":props.proj});
+            if(response.status === 201){
+                console.log("Todo added to project successfully");
+                setProjecttodo([...projecttodo,response.data]);
+            }
+        }
+        catch(err){
+            console.log(err);
         }
     }
 
@@ -25,7 +38,8 @@ const Taskcreate = () => {
             const res = await api.post("/api/Todo-list/",{"Description":description,"Status":statuses});
             if(res.status === 201){
                 console.log("Todo added successfully");
-                const response = api.put("/api/Project-list/3/",{"ListofTodo":res.data.todo_id,"title":"Project 3"});
+                setProjecttodo(res.data);
+                UpdateProjectTodo(res.data.todo_id);
             }
         }
         catch(err){
@@ -34,7 +48,6 @@ const Taskcreate = () => {
         finally{
             setDescription("");
             setStatuses(false);
-            Navigate("/todo");
         }
     }
 
