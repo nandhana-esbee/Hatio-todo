@@ -25,7 +25,7 @@ const Projectcard = (props) => {
     }
 
     return (
-        <div className="ui card">
+        <div className="ui card" style={{width:"20.3rem"}}>
             <div className="content">
                 <div className="header">{props.projects.title}</div>
             </div>
