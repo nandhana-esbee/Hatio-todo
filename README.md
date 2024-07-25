@@ -16,7 +16,8 @@ An application to manage todos created as part of Hatio 'Take home challenge'.
 ### Login Page
 ![Login Page](https://github.com/user-attachments/assets/171011ce-27e5-45d0-9441-0c792a2b20c4)
 ### Project List Page
-![Project List Page](https://github.com/user-attachments/assets/4e542b4d-e96f-46f7-8f61-3c7ade31de79)
+![Project List Page](https://github.com/user-attachments/assets/96fd715a-7022-46a3-89d7-a65c38f4e511)
+
 ### Todo List Page
 ![Todo List Page](https://github.com/user-attachments/assets/38d6dd81-cece-4d8f-b624-5503b64e2c2e)
 
