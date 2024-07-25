@@ -10,6 +10,7 @@ import Login from './Login';
 import Register from './Register';
 import TodoList from './TodoList';
 import ProtectedRoute from './ProtectedRoute';
+// import GistCreator from './Secretgist'
 
 //Logout function to clear the local storage
 function Logout(){
@@ -49,6 +50,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
         <Route path="/todo"  element={<ProtectedRoute><TodoList /></ProtectedRoute>}></Route>
+        {/* <Route path="/sgist"  element={<ProtectedRoute><GistCreator /></ProtectedRoute>}></Route> */}
         <Route path="/login"  element={<Login/>}></Route>
         <Route path="/logout"  element={<Logout/>}></Route>
         <Route path="/register"  element={<RegisterAndLogout/>}></Route>
