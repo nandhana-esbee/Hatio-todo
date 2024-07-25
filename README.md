@@ -11,7 +11,17 @@ An application to manage todos created as part of Hatio 'Take home challenge'.
 </div>
 
  ## About The Project
+ ### Register Page
 ![Register page](https://github.com/user-attachments/assets/8e6e85b1-fc06-4cc4-9741-d0866b3c3320)
+### Login Page
+![Login Page](https://github.com/user-attachments/assets/171011ce-27e5-45d0-9441-0c792a2b20c4)
+### Project List Page
+![Project List Page](https://github.com/user-attachments/assets/4e542b4d-e96f-46f7-8f61-3c7ade31de79)
+### Todo List Page
+![Todo List Page](https://github.com/user-attachments/assets/38d6dd81-cece-4d8f-b624-5503b64e2c2e)
+
+
+
 
 
 This project is a comprehensive task management application developed using React JS for the frontend with semantic ui package and Django Rest Framework for the backend, with PostgreSQL serving as the database.
