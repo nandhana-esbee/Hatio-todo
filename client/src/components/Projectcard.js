@@ -15,6 +15,8 @@ const Projectcard = (props) => {
             const response = await api.delete(`/api/Project-list/${pro.Project_id}/`);
             if(response.status === 204){
                 console.log("Deleted successfully");
+                window.location.reload()
+
             }
         }
         catch(err){

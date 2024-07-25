@@ -60,8 +60,14 @@ const TodoList = () => {
     const count = Todolist.length;
     const truecount = Todolist.filter((todo) => todo.Status === true).length;  
 
-    const todolistrender = Todolist.map((todo) => {
-        return <Todotable todoos={todo} key={todo.todo_id}/>
+    const todolistpendingrender = Todolist.map((todo) => {
+        if(todo.Status===false)
+            return <Todotable todoos={todo} key={todo.todo_id}/>
+    })
+
+    const todolistcompletedrender = Todolist.map((todo) => {
+        if(todo.Status===true)
+         return <Todotable todoos={todo} key={todo.todo_id}/>
     })
 
 return (
@@ -73,7 +79,10 @@ return (
             <h5>Summary = {truecount}/{count}</h5><hr/>
         </h2>
     <TodoCreate addtodohandler={addtodohandler}/>
-    <div className="ui unstackable table" style={{width:"50rem",marginLeft:"27rem"}}>{todolistrender}</div>
+    <h3 align="center">Pending</h3>
+    <div className="ui unstackable table" style={{width:"50rem",marginLeft:"27rem"}}>{todolistpendingrender}</div>
+    <h3 align="center">Completed</h3>
+    <div className="ui unstackable table" style={{width:"50rem",marginLeft:"27rem"}}>{todolistcompletedrender}</div>
     </div>
 );
 }

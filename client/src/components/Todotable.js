@@ -15,6 +15,7 @@ const Todotable = (props) => {
             const response = await api.put(`/api/Todo-list/${todo_id}/`,{Status:status});
             if(response.status === 200){
                 console.log("Status changed successfully");
+                window.location.reload();
             }
         }
         catch(err){
@@ -39,6 +40,7 @@ const Todotable = (props) => {
             const response = await api.delete(`/api/Todo-list/${todo_id}/`);
             if(response.status === 204){
                 console.log("Deleted successfully");
+                window.location.reload();
             }
         }
         catch(err){
