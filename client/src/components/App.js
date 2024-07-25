@@ -10,7 +10,6 @@ import Login from './Login';
 import Register from './Register';
 import TodoList from './TodoList';
 import ProtectedRoute from './ProtectedRoute';
-import Taskedit from './Taskedit';
 
 //Logout function to clear the local storage
 function Logout(){
@@ -50,7 +49,6 @@ function App() {
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
         <Route path="/todo"  element={<ProtectedRoute><TodoList /></ProtectedRoute>}></Route>
-        <Route path="/edittodo"  element={<ProtectedRoute><Taskedit /></ProtectedRoute>}></Route>
         <Route path="/login"  element={<Login/>}></Route>
         <Route path="/logout"  element={<Logout/>}></Route>
         <Route path="/register"  element={<RegisterAndLogout/>}></Route>

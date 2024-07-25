@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 
@@ -23,11 +23,32 @@ const Projectcard = (props) => {
             console.log(err);
         }
     }
+    const [todo,setTodo] = useState([]);
+    useEffect( () =>{
+      const getTodo = async () =>{
+        const res = await api.get("/api/Todo-list/",{
+                params: {
+                  "Project_id": pro.Project_id,
+                }});
+        if(res.data) setTodo(res.data);
+      };
+      getTodo();
+    },
+    []
+
+    );
+
+    // 
+    // console.log(todo.data);
+
+    const count = todo.length;
+    const truecount = todo.filter((todos) => todos.Status === true).length;  
 
     return (
         <div className="ui card" style={{width:"20.3rem"}}>
             <div className="content">
                 <div className="header">{props.projects.title}</div>
+                <div className="content" style={{fontFamily:"serif"}}>{truecount}/{count}</div>
             </div>
             <div className="extra content">
                 <div className="ui three buttons">
