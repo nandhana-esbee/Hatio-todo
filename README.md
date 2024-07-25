@@ -25,7 +25,7 @@ An application to manage todos created as part of Hatio 'Take home challenge'.
 
 
 This project is a comprehensive task management application developed using React JS for the frontend with semantic ui package and Django Rest Framework for the backend, with PostgreSQL serving as the database.
-Users can register and log in to the application, with authentication managed through SimpleJWT. Once authenticated, users can create and manage projects, each of which can have multiple to-dos. Users can update project names, add new to-dos, edit existing ones and delete them. This functionality ensures a seamless and organized approach to task management, with a robust authentication mechanism to secure user data and actions.
+Users can register and log in to the application, with authentication managed through SimpleJWT. Once authenticated, users can create and manage projects, each of which can have multiple to-dos. Users can update project names, add new to-dos, edit existing ones,delete them and export Todo summary markdown as secret gists on github. This functionality ensures a seamless and organized approach to task management, with a robust authentication mechanism to secure user data and actions.
  ### Built With
 
 - [React JS](https://react.dev/)
