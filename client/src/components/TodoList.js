@@ -2,7 +2,6 @@ import Todotable from "./Todotable";
 import { useLocation } from "react-router-dom";
 import { useEffect ,useState} from "react";
 import api from "../api";
-// import Taskcreate from './Taskcreate';
 import TodoCreate from "./TodoCreate";
 
 

@@ -42,20 +42,6 @@ function RegisterAndLogout(){
   return <Register />
 }
 
-
-//delete the project card
-// function DeleteProject(id) {
-//    try{
-//     const res = api.delete('/api/Project-list/'+id+'/');
-//    }
-//    catch(err){
-//      console.log(err);
-//    }
-//    finally{
-//      return <Navigate to="/" />
-//    } 
-// }
-
 function App() {
   
   return (
@@ -63,7 +49,6 @@ function App() {
       <Browser>
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
-        {/* <Route path="/deleteproj" element={<ProtectedRoute><DeleteProject/></ProtectedRoute>}></Route> */}
         <Route path="/todo"  element={<ProtectedRoute><TodoList /></ProtectedRoute>}></Route>
         <Route path="/edittodo"  element={<ProtectedRoute><Taskedit /></ProtectedRoute>}></Route>
         <Route path="/login"  element={<Login/>}></Route>

@@ -1,6 +1,5 @@
 import React ,{useState,useEffect} from "react";
 import api from '../api';
-// import components
 import Header from './Header';
 import Projectcreate from './Projectcreate';
 import ProjectList from './ProjectList';
