@@ -68,10 +68,8 @@ const Projectcard = (props) => {
             }
           });
     
-          console.log('Gist created:', response.data);
           alert('Gist created successfully!');
         } catch (error) {
-          console.error('Error creating gist:', error);
           alert('Failed to create gist.');
         }
       };
