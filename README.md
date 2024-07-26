@@ -2,12 +2,10 @@
 <br/>
 <div align="center">
 
-<h3 align="center">Hatio-todo App</h3>
-<p align="center">
-An application to manage todos created as part of Hatio 'Take home challenge'.
+# Hatio-Todo APP
+## An application to manage todos created as part of Hatio 'Take home challenge'.
 
 <br/>
-</p>
 </div>
 
  ## About The Project
