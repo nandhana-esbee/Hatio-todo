@@ -2,7 +2,7 @@
 <br/>
 <div align="center">
 
-#Todo APP
+# Todo APP
 ## An application to manage todos created as part of Hatio 'Take home challenge'.
 
 <br/>
