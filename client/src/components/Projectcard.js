@@ -90,7 +90,7 @@ const Projectcard = (props) => {
         }
 
         if (completedTodos.length > 0) {
-            markdownContent += `## Completed\n`;
+            markdownContent += `\n\n## Completed\n`;
             completedTodos.forEach(todooos => {
               markdownContent +=`- [x] **${todooos.Description}**\n`;
             });

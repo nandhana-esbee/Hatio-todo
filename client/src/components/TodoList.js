@@ -3,22 +3,43 @@ import {useNavigate, useLocation } from "react-router-dom";
 import { useEffect ,useState} from "react";
 import api from "../api";
 import TodoCreate from "./TodoCreate";
+//import Projedit from "./Projedit";
 
 
 const TodoList = () => {
     const [Todolist,SetTodolist] = useState([]);
     const location = useLocation();
     const[projecttodo,setProjecttodo] = useState([]);
-    const [projname,setProjname] = useState(location.state.pro.title);
+    let projectname = location.state.pro.title;
+    const [projname,setProjname] = useState(projectname);
+    
     const navigate = useNavigate();
     const proj_id = location.state.pro.Project_id;
+
+    //Retrieve the project
+    const ProjectRetrieve =(proj_id) =>
+        {
+           const res = api.get(`/api/Project-list/${proj_id}/`);
+           return res.data;
+        }
+    
+    useEffect(() => {
+        const getthisProject = async () => {
+          const ThisProjects = await ProjectRetrieve(proj_id);
+          if (ThisProjects) setProjname(ThisProjects.data.title);
+          console.log(projname);
+        };
+        getthisProject();
+      }, []);
 
     const Editprojecto = async () => {
         const res = await api.put(`/api/Project-list/${proj_id}/`, {"title" :projname})
         if(res.status === 200)
         {
             console.log("project title changed");
-            navigate(-1)
+            setProjname(res.data.title);
+            console.log(res.data.title);
+            //navigate(-1)
         }
     }
 
@@ -66,6 +87,8 @@ const TodoList = () => {
           };
          getAllTodos();
     },[]);
+
+    
 
     const count = Todolist.length;
     const truecount = Todolist.filter((todo) => todo.Status === true).length;  
