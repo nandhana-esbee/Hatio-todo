@@ -74,7 +74,7 @@ Inorder to run the application you should install the following:
     ```sh
     pip install -r requirements.txt
     ```
-6. Enter your env variables inside .env file
+6. Enter your env variables inside .env file of Server folder
    ```sh
    #POSTGRES credentials for the database
     POSTGRES_DB=your DB name
@@ -83,11 +83,16 @@ Inorder to run the application you should install the following:
     POSTGRES_HOST=your host(eg : localhost)
     POSTGRES_PORT=portnumber(eg:5432)
    ```
-7. Run the django app using
+7. Enter your gist api inside .env file of client folder
+   ```sh
+   REACT_APP_GIT_TOKEN= your gist api
+   ```
+
+8. Run the django app using
    ```sh
    python manage.py runserver
    ```
-8. Open new terminal and open client folder. Run the APP.
+9. Open new terminal and open client folder. Run the APP.
 
    ```sh
     cd client
