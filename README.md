@@ -101,7 +101,9 @@ Inorder to run the application you should install the following:
 
  ## Testing
 
+1.API testing
    ```sh
-   not added yet
+   cd Server
+   python users/tests.py
 
    ```
