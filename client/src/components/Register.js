@@ -12,7 +12,7 @@ const Register = () => {
 
     const navigate = useNavigate();
 
-    const handlesubmit = (e) => {
+    const handlesubmit = async (e) => {
         e.preventDefault();
         if(username === "" || email === "" || password === "" || password2 === ""){
             alert("Please fill all the fields");
@@ -21,15 +21,23 @@ const Register = () => {
             alert("Passwords do not match");
             return;
         }
-    
-
+        if(password.length < 8){
+            alert("Password should be atleast 8 characters long");
+            return;
+        }
+        if(username.length < 4){
+            alert("Username should be atleast 4 characters long");
+            return;
+        }
+        
         try{
-            const res = api.post("userconf/register/",{username,email,password});
+            const res = await api.post("userconf/register/",{username,email,password});
             navigate("/login");
             return res;
         }
         catch(err){
-            alert(err);
+            alert("Registration failed, email already exists");
+            console.log(err.response.data);
         }
         finally{
         setUsername("");

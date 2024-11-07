@@ -17,6 +17,7 @@ const Login = () => {
       alert("Please fill all the fields");
       return;
     }
+    
     try{
     const res = await api.post("userconf/login/",{username , password});
     localStorage.setItem(ACCESS_TOKEN,res.data.tokens['access']);
@@ -25,6 +26,7 @@ const Login = () => {
   }
     catch(err){
       alert(err);
+      console.log(err.response.data);
     }
     finally{
       setUsername("");
