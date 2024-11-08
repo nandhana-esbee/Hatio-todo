@@ -12,7 +12,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 class TodoSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Todo
-		fields = ('todo_id', 'Description','Status','Updated_Date')
+		fields = ('todo_id', 'Description','Status','Updated_Date','isRecycled','isVisible')
 
 # serializer class ProjectTodo model
 class ProjectTodoSerializer(serializers.ModelSerializer):

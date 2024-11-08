@@ -11,6 +11,8 @@ class Todo(models.Model):
     Status = models.BooleanField(default=False)
     Created_Date = models.DateTimeField(auto_now_add=True)
     Updated_Date = models.DateTimeField(auto_now=True)
+    isRecycled = models.BooleanField(default=False)
+    isVisible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.Description
@@ -33,3 +35,4 @@ class ProjectTodo(models.Model):
     
     def __str__(self):
         return self.todo.Description   
+    

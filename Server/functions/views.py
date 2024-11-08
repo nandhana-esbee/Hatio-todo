@@ -44,6 +44,22 @@ class TodoView(viewsets.ModelViewSet):
             return Response(project_todo_data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    #makes the todo recycled and visible
+    @action(detail=True, methods=['post'])
+    def recycle(self, request, *args, **kwargs):
+        todoid = kwargs.get('pk')
+        todo = Todo.objects.filter(todo_id=todoid).first()
+        if not todo:
+            return Response({'error': 'Todo not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = TodoSerializer(todo ,data={'isRecycled':True,'isVisible':True}, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({'message': 'Todo recycled successfully'}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         
     #update a todo
     def update(self, request, *args, **kwargs):
@@ -68,15 +84,20 @@ class TodoView(viewsets.ModelViewSet):
     #delete a todo
     def destroy(self, request, *args, **kwargs):
         todo_id = kwargs.get('pk')
-        todo = Todo.objects.filter(todo_id=todo_id)
+        todo = Todo.objects.filter(todo_id=todo_id).first()
         if not todo:
             return Response({'error': 'Todo not found'}, status=status.HTTP_404_NOT_FOUND)
-        todo.delete()
-        return Response({'message': 'Todo deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        #todo.delete()
+        serializer = TodoSerializer(todo,data={'isVisible':False}, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({'message': 'Todo deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def retrieve(self, request, *args, **kwargs):
         todo_id = kwargs.get('pk')
-        todo = Todo.objects.filter(todo_id=todo_id).first()
+        todo = Todo.objects.filter(todo_id=todo_id,isVisible=True).first()
         if not todo:
             return Response({'error': 'Todo not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer = TodoSerializer(todo)
@@ -87,7 +108,7 @@ class TodoView(viewsets.ModelViewSet):
         #need to pass project_id through params
         project_id = request.query_params.get('Project_id')
         todo_ids = ProjectTodo.objects.filter(project=project_id).values_list('todo', flat=True)
-        todos = Todo.objects.filter(todo_id__in=todo_ids).order_by('-Status')
+        todos = Todo.objects.filter(todo_id__in=todo_ids,isVisible =True).order_by('-Status')
         serializer = TodoSerializer(todos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
       
@@ -161,3 +182,27 @@ class ProjectView(viewsets.ModelViewSet):
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+  
+#List the deleted todos
+class deletedView(viewsets.ModelViewSet):
+    serializer_class = TodoSerializer
+    queryset = Todo.objects.all()
+    permission_classes = (IsAuthenticated,)
+    def list(self, request, *args, **kwargs):
+        todos = Todo.objects.filter(isVisible =False).order_by('-Status')
+        serializer = TodoSerializer(todos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    #restore the deleted todo
+    @action(detail=True, methods=['post'])
+    def restore(self, request, *args, **kwargs):
+        todoid = kwargs.get('pk')
+        todo = Todo.objects.filter(todo_id=todoid).first()
+        if not todo:
+            return Response({'error': 'Todo not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = TodoSerializer(todo ,data={'isRecycled':True,'isVisible':True}, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({'message': 'Todo restored successfully'}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
